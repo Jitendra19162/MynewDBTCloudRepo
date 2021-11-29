@@ -1,0 +1,18 @@
+version: 2
+sources:
+  - name: stripe
+    description: this is the resource schema of payment data of stripe
+    database: raw
+    tables:
+      - name: payment
+        description: raw data of payments
+        loaded_at_field: _batched_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}        
+        columns:
+          - name: PAYMENT_ID
+            description: unique id of payment made
+            test:
+              - unique
+              - not_null
